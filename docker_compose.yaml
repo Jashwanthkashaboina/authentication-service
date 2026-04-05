@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  app:
+    image: jashwanth18/node-auth-backend:1.0
+    container_name: auth-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - mongo
+    environment:
+      PORT: 8000
+      MONGO_URL: mongodb://mongo:27017/authDB
+      JWT_SECRET: docker_container
+      REDIS_URL: redis://redis:6379
+
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+  
+  mongo:
+    image: mongo:latest
+    container_name: mongo_container
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+     - mongo-data:/data/db
+    
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express-container
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+
+volumes:
+  mongo-data:
