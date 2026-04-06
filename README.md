@@ -27,6 +27,26 @@ This project provides a complete authentication system with secure password hash
 * JWT
 * bcrypt
 
+## API Endpoints
+
+* `POST /users` → Register new user
+* `POST /users/login` → Login and receive JWT
+* `GET /users` → Get all users (Protected + Redis Cache)
+* `GET /users/:id` → Get single user by ID (Protected)
+
+## Run with Docker Compose
+
+```bash
+docker compose -f docker_compose.yaml up -d
+```
+
+Services:
+
+* App → `http://localhost:8000`
+* Mongo Express → `http://localhost:8081`
+* Redis → `localhost:6379`
+
+
 ## Image
 
 `jashwanth18/node-auth-backend:1.0`
